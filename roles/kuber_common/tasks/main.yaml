@@ -1,0 +1,72 @@
+---
+
+- name: Remove swapfile from /etc/fstab
+  mount:
+    name: swap
+    fstype: swap
+    state: absent
+  tags:
+  - swappoff
+
+- name: Disable swap
+  command: swapoff -a
+  when: ansible_swaptotal_mb > 0
+  tags:
+  - swappoff
+
+- name: Add the br_netfilter module
+  modprobe:
+    name: br_netfilter
+    state: present
+  tags:
+  - modprobe
+
+- name: Enable br_netfilter
+  copy:
+    src: files/ks8.conf
+    dest: /etc/sysctl.d/
+  tags:
+  - modprobe
+
+- name: Reload sysctl
+  shell: sysctl -p
+  tags:
+  - modprobe
+
+- name: Add Docker repo
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+  tags:
+  - repo
+
+- name: Add kubernetes repo
+  copy:
+    src: files/kubernetes.repo
+    dest: /etc/yum.repos.d/
+  tags:
+  - repo
+
+- name: Install required kuber packages
+  yum: name={{ packages }} state=present
+  ignore_errors: True
+  tags:
+  - packages
+
+- name: Start Docker service
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+  tags:
+  - start_docker
+
+- name: Configure docker
+  copy:
+    src: files/daemon.json
+    dest: /etc/docker/
+  notify: 
+    - restart docker
+    - restart kubelet
+  tags:
+  - start_docker

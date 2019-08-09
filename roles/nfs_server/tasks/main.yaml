@@ -1,0 +1,35 @@
+---
+
+- name: Start rpcbind service
+  systemd:
+    name: rpcbind
+    state: started
+    enabled: yes
+  tags:
+  - start_nfsd
+
+- name: Start nfs-server service
+  systemd:
+    name: nfs-server
+    state: started
+    enabled: yes
+  tags:
+  - start_nfsd
+
+- name: Creates nfs directory
+  file:
+    path: /mnt/nfs
+    state: directory
+    owner: nfsnobody
+    group: nfsnobody
+    mode: 0775
+  tags:
+  - create_nfs_dir
+
+- name: Copy /etc/exports
+  template:
+    src: exports.j2
+    dest: /etc/exports
+  notify: restart nfsd
+  tags:
+  - copy_exports

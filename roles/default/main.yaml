@@ -1,0 +1,3 @@
+{% for h in groups['kuber'] %}
+ - {{ hostvars[h].ansible_ssh_host }}
+{% endfor %}

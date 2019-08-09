@@ -1,0 +1,5 @@
+---
+
+- hosts: kuber
+  roles:
+  - kuber_common

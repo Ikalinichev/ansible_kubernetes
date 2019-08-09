@@ -1,0 +1,9 @@
+---
+
+- import_playbook: common.yaml
+- import_playbook: nfs_server.yaml
+- import_playbook: kuber_common.yaml
+- import_playbook: kuber_init.yaml
+- import_playbook: kuber_ingress.yaml
+- import_playbook: kuber_dashboard.yaml
+- import_playbook: kuber_persistent_volume.yaml

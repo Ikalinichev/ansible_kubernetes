@@ -1,0 +1,24 @@
+---
+
+- name: Install Dashboard mandatory
+  shell: kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta1/aio/deploy/recommended.yaml
+  tags:
+  - install_dashboard
+
+- name: Copy dashboard-ingress file
+  template:
+    src: dashboard-ingress.j2
+    dest: /tmp/dashboard-ingress.yaml
+  tags:
+  - install_dashboard
+
+- name: Install Dashboard service
+  shell: kubectl apply -f /tmp/dashboard-ingress.yaml
+  tags:
+  - install_dashboard
+
+- name: Grant access to read cluster to kubernetes-dashboard SA
+  shell: kubectl create clusterrolebinding kubernetes-dashboard-cluster-admin --clusterrole cluster-admin --serviceaccount=kubernetes-dashboard:kubernetes-dashboard
+  ignore_errors: yes
+  tags:
+  - install_dashboard

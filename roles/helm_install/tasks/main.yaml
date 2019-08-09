@@ -1,0 +1,28 @@
+---
+
+- name: Download helm
+  get_url:
+    url: https://storage.googleapis.com/kubernetes-helm/helm-v2.14.1-linux-amd64.tar.gz
+    dest: /tmp/helm-v2.14.1-linux-amd64.tar.gz
+  tags:
+  - helm_install
+
+- name: Extract helm.tgz
+  unarchive:
+    src: /tmp/helm-v2.14.1-linux-amd64.tar.gz
+    dest: /tmp
+    remote_src: yes
+  tags:
+  - helm_install
+  
+- name: Install helm
+  command: "{{ item }}"
+  with_items: 
+    - mv /tmp/linux-amd64/helm /usr/local/bin/helm
+    - kubectl -n kube-system create sa tiller
+    - kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
+    - helm init --service-account tiller
+  ignore_errors: yes
+  tags:
+  - helm_install
+

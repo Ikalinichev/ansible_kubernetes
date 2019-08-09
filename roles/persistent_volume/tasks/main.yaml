@@ -1,0 +1,31 @@
+---
+
+- name: Copy persistent volume class file
+  template:
+    src: class.j2
+    dest: /tmp/class.yaml
+  tags:
+  - install_pv
+
+- name: Copy persistent volume deployment file
+  template:
+    src: deployment.j2
+    dest: /tmp/deployment.yaml
+  tags:
+  - install_pv
+
+- name: Copy persistent volume deployment file
+  template:
+    src: rbac.j2
+    dest: /tmp/rbac.yaml
+  tags:
+  - install_pv
+
+- name: Install Dashboard mandatory
+  shell: kubectl apply -f "{{item}}"
+  with_items:
+    - /tmp/rbac.yaml
+    - /tmp/class.yaml
+    - /tmp/deployment.yaml
+  tags:
+  - install_pv

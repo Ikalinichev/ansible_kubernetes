@@ -1,0 +1,31 @@
+---
+
+- name: Install required packages
+  yum: name={{ packages }} state=present
+  ignore_errors: True
+  tags:
+  - packages
+
+- name: Upgrade all packages
+  yum:
+    name: '*'
+    state: latest
+  tags:
+  - packages
+
+- name: Disable SELinux
+  selinux:
+    state: disabled
+  tags:
+  - selinux
+
+- name: Disalbe firewalld
+  systemd:
+    name: firewalld
+    state: stopped
+    enabled: no
+  tags:
+  - firewalld
+
+- name: Reboot
+  reboot:

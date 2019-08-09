@@ -1,0 +1,14 @@
+---
+
+packages:
+   - epel-release
+   - chrony
+   - vim
+   - telnet
+   - unzip
+   - rsync
+   - wget
+   - yum-utils
+   - device-mapper-persistent-data
+   - lvm2
+   - nfs-utils
