@@ -7,3 +7,4 @@
 - import_playbook: kuber_ingress.yaml
 - import_playbook: kuber_dashboard.yaml
 - import_playbook: kuber_persistent_volume.yaml
+- import_playbook: helm_install.yaml
