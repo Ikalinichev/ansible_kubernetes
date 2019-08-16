@@ -1,0 +1,22 @@
+---
+
+- name: Copy tls-secret file
+  template:
+    src: tls-secret.j2
+    dest: /tmp/tls-secret.yaml
+  tags:
+  - install_tls
+
+- name: Delete tls-secret
+  shell: kubectl delete -f /tmp/tls-secret.yaml -n "{{item}}"
+  with_items: "{{namespace}}"
+  ignore_errors: yes
+  tags:
+  - install_tls
+
+- name: Install tls-secret
+  shell: kubectl create -f /tmp/tls-secret.yaml -n "{{item}}"
+  with_items: "{{namespace}}"
+  ignore_errors: yes
+  tags:
+  - install_tls

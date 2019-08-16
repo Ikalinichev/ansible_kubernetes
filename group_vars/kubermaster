@@ -1,0 +1,6 @@
+---
+
+namespace:
+  - develop
+  - feature
+  - kubernetes-dashboard

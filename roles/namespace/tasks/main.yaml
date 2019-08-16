@@ -1,0 +1,8 @@
+---
+
+- name: Create namespace
+  shell: kubectl create namespace "{{item}}"
+  with_items: "{{namespace}}"
+  ignore_errors: yes
+  tags:
+  - create_namespace

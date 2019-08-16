@@ -1,0 +1,6 @@
+---
+
+- hosts: kubermaster
+  gather_facts: yes
+  roles:
+  - namespace
