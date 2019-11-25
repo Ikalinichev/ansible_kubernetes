@@ -10,10 +10,10 @@ metadata:
 spec:
   tls:
     - hosts:
-      - kd.{{ inventory_hostname }}
+      - kd.{{ dnsname }}
       secretName: tls-secret
   rules:
-    - host: kd.{{ inventory_hostname }}
+    - host: kd.{{ dnsname }}
       http:
         paths:
         - path: /

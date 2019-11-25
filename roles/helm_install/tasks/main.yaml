@@ -2,14 +2,14 @@
 
 - name: Download helm
   get_url:
-    url: https://storage.googleapis.com/kubernetes-helm/helm-v2.14.1-linux-amd64.tar.gz
-    dest: /tmp/helm-v2.14.1-linux-amd64.tar.gz
+    url: https://storage.googleapis.com/kubernetes-helm/helm-v2.16.1-linux-amd64.tar.gz
+    dest: /tmp/helm-v2.16.1-linux-amd64.tar.gz
   tags:
   - helm_install
 
 - name: Extract helm.tgz
   unarchive:
-    src: /tmp/helm-v2.14.1-linux-amd64.tar.gz
+    src: /tmp/helm-v2.16.1-linux-amd64.tar.gz
     dest: /tmp
     remote_src: yes
   tags:

@@ -15,10 +15,23 @@
   tags:
   - kubeadm_init
 
-- name: Kubectl apply flannel
-  shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+#- name: Kubectl apply flannel
+#  shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+# tags:
+# - kubeadm_init
+
+- name: Copy Calico file
+  copy:
+    src: files/calico.yaml
+    dest: /tmp/calico.yaml
   tags:
-  - kubeadm_init
+ - kubeadm_init
+
+- name: Kubectl apply Calico
+  shell: kubectl apply -f /tmp/calico.yaml
+ tags:
+ - kubeadm_init
+
 
 - name: Create join token
   shell: kubeadm token create --print-join-command

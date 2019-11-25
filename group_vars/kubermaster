@@ -4,3 +4,5 @@ namespace:
   - develop
   - feature
   - kubernetes-dashboard
+
+dnsname avis-proxy.vn.local
